@@ -1,0 +1,1216 @@
+{
+  "name": "MVP",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "MVP form",
+        "formDescription": "ART AI CONTENT STUDIO",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "what do you want to create?",
+              "fieldType": "dropdown",
+              "fieldName": "Content Type",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Instagram Post"
+                  },
+                  {
+                    "option": "Instagram Reel"
+                  },
+                  {
+                    "option": "Blog"
+                  },
+                  {
+                    "option": "Website Content"
+                  },
+                  {
+                    "option": "Campaign"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Topic",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Target Audience"
+            },
+            {
+              "fieldLabel": "Platform",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Instagram"
+                  },
+                  {
+                    "option": "Youtube"
+                  },
+                  {
+                    "option": "LinkedIN"
+                  },
+                  {
+                    "option": "Twitter"
+                  },
+                  {
+                    "option": "Website"
+                  },
+                  {
+                    "option": "Google Ads"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Campaign Objective:"
+            },
+            {
+              "fieldLabel": "Language:",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Tone:"
+            },
+            {
+              "fieldLabel": "Additional Instructions",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Reference",
+              "fieldType": "textarea",
+              "placeholder": "Paste old/existing content, suggested content, or any reference here. The new content will follow its flow, key points and order."
+            }
+          ]
+        },
+        "options": {
+          "buttonLabel": "Generate",
+          "respondWithOptions": {
+            "values": {}
+          }
+        }
+      },
+      "id": "d4caa623-2d02-499a-9307-24d7ece14409",
+      "name": "On form submission",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        -3280,
+        192
+      ],
+      "webhookId": "e48d5378-c5b4-4dd8-be21-c4950d56f8ff"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "16738bb2-dadf-4f0a-822f-b9f7318c3714",
+              "name": "content_type",
+              "value": "={{$json[\"Content Type\"]}}",
+              "type": "string"
+            },
+            {
+              "id": "e2e92fa8-4a52-48e4-b229-a9600384e0f2",
+              "name": "topic",
+              "value": "={{$json[\"Topic\"]}}",
+              "type": "string"
+            },
+            {
+              "id": "abc5852a-1c9b-4f90-abab-c216a9433a8d",
+              "name": "target_audience",
+              "value": "={{$json[\"Target Audience\"]}}",
+              "type": "string"
+            },
+            {
+              "id": "b7a9ccb3-7cb9-4ef1-9f7f-3644527c906d",
+              "name": "platform",
+              "value": "={{$json[\"Platform\"]}}",
+              "type": "string"
+            },
+            {
+              "id": "f8a0bcd9-87fd-4170-a62f-769d4c39c361",
+              "name": "language",
+              "value": "={{$json[\"Language:\"]}}",
+              "type": "string"
+            },
+            {
+              "id": "b1e2a7ee-4f5d-403d-86fb-a5f3e6c128fe",
+              "name": "tone",
+              "value": "={{$json[\"Tone:\"]}}",
+              "type": "string"
+            },
+            {
+              "id": "0cd32b97-cb2f-45e5-a089-57ba8b824f8b",
+              "name": "additional_instructions",
+              "value": "={{$json[\"Additional Instructions\"]}}",
+              "type": "string"
+            },
+            {
+              "id": "46b27f6f-061b-4d2d-bc7a-37a4af8a2e7c",
+              "name": "campaign_objective",
+              "value": "={{$json[\"Campaign Objective:\"]}}",
+              "type": "string"
+            },
+            {
+              "id": "a1f3c2d7-8b64-4e19-9c02-7d5f0a1b2c3e",
+              "name": "reference",
+              "value": "={{$json[\"Reference\"]}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {
+          "dotNotation": false
+        }
+      },
+      "id": "48676ff3-b095-45e6-b9e0-060dc43c6104",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -3056,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Analyze the following content request for ART Fertility Clinics India.\n\nContent Type: {{ $json.content_type }}\nTopic: {{ $json.topic }}\nTarget Audience: {{ $json.target_audience }}\nPlatform: {{ $json.platform }}\nCampaign Objective: {{ $json.campaign_objective }}\nLanguage: {{ $json.language }}\nTone: {{ $json.tone }}\nAdditional Instructions: {{ $json.additional_instructions }}\n\nDetermine how this request should be processed by the ART AI Content Intelligence Platform.",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are the ART AI Content Orchestrator for ART Fertility Clinics India.\n\nYou are responsible for analyzing incoming content requests and deciding how they should be processed.\n\nYou are NOT the content writer.\n\nCURRENT V0.1 IMPLEMENTATION:\nOnly the content generation specialist \"social_agent\" is implemented in this workflow.\n\nFor ALL supported content types currently available in the form:\n- Instagram Post\n- Instagram Reel\n- Blog\n- Website Content\n- Campaign\n\nyou MUST select:\n\"social_agent\"\n\nDo NOT select \"website_agent\", \"campaign_agent\", or \"seo_agent\" because those specialist agents are not implemented in the current workflow.\n\nVALIDATION REQUIREMENTS:\n- Any fertility, IVF, reproductive-health, or medical request must have requires_medical_validation = true.\n- All ART Fertility Clinics India content must have requires_brand_validation = true.\n- All medical marketing content must have requires_human_review = true.\n\nSAFETY:\n- Never invent medical information, statistics, success rates, or clinical claims.\n- Never make treatment guarantees or pregnancy guarantees.\n- Return ONLY the structured output requested by the output schema."
+        }
+      },
+      "id": "dde91861-ab1d-4f6f-9258-c6e9add49ec3",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -2832,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {
+          "webSearch": {
+            "searchContextSize": "low"
+          }
+        },
+        "options": {}
+      },
+      "id": "b0c0082b-1859-4973-9dae-345c96fc7d32",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -2976,
+        400
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": null,
+          "name": "",
+          "__aiGatewayManaged": true
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"specialist\": {\n      \"type\": \"string\",\n      \"enum\": [\n        \"social_agent\"\n      ]\n    },\n    \"requires_medical_validation\": {\n      \"type\": \"boolean\"\n    },\n    \"requires_brand_validation\": {\n      \"type\": \"boolean\"\n    },\n    \"requires_human_review\": {\n      \"type\": \"boolean\"\n    }\n  },\n  \"required\": [\n    \"specialist\",\n    \"requires_medical_validation\",\n    \"requires_brand_validation\",\n    \"requires_human_review\"\n  ],\n  \"additionalProperties\": false\n}"
+      },
+      "id": "40aaa2e3-e0b3-40bc-ac12-8e7304c8e7f4",
+      "name": "Structured Output Parser",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -2656,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.output.specialist }}",
+                    "rightValue": "social_agent",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "84687008-1bc6-4e58-a38d-289176e7221a"
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "40bab6a3-8fa3-4473-b9e0-05f720da5f80",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -2464,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Create the requested content for ART Fertility Clinics India.\n\nContent Type: {{ $('Edit Fields').first().json.content_type }}\nTopic: {{ $('Edit Fields').first().json.topic }}\nTarget Audience: {{ $('Edit Fields').first().json.target_audience }}\nPlatform: {{ $('Edit Fields').first().json.platform }}\nCampaign Objective: {{ $('Edit Fields').first().json.campaign_objective }}\nLanguage: {{ $('Edit Fields').first().json.language }}\nTone: {{ $('Edit Fields').first().json.tone }}\nAdditional Instructions: {{ $('Edit Fields').first().json.additional_instructions }}\n\nReference Content (old/existing/suggested content to model after — may be empty):\n{{ $('Edit Fields').first().json.reference }}\n\nGenerate the requested content according to the system instructions.",
+        "options": {
+          "systemMessage": "You are the Content Generation Agent for ART Fertility Clinics India.\n\nYou create high-quality, accurate, patient-friendly content based strictly on the user's request.\n\nYou are a CONTENT GENERATION AGENT. You create content only. You do NOT perform medical validation, brand validation, or final approval.\n\nCORE PRINCIPLES:\n- Professional, empathetic, warm, patient-friendly tone.\n- Never invent medical facts, statistics, success rates, or clinical claims.\n- Never guarantee pregnancy or treatment success.\n- Never use fear-based, sensational, or manipulative language.\n- Never make a medical diagnosis or provide individualized medical advice.\n- Follow the requested platform, content type, language, tone, audience, campaign objective, and additional instructions.\n- For Instagram posts use Hook / Caption / CTA / Hashtags.\n- For Instagram reels provide a Hook and Script.\n- For website/blog content, produce long-form E-E-A-T content of 2500-3000 words.\n- For Blog and Website Content, structure the content with:\n  1. Introduction\n  2. Table of Contents\n  3. Main Content\n  4. FAQs (5)\n  5. People Also Ask (5)\n  6. Conclusion\n- The COMPLETE blog/website article, including Introduction, Main Content, FAQs, People Also Ask, and Conclusion, must be 2500-3000 words. The Table of Contents is included as part of the article structure but does not need to be counted toward the substantive word target.\n- Use clear headings and subheadings appropriate to the requested content.\n- For Campaign requests, create the requested campaign content according to the supplied objective, audience, platform, language, tone, and instructions.\n\nREFERENCE CONTENT HANDLING:\n- A \"Reference Content\" field may be provided containing old, existing, or suggested content. It may also be empty.\n- When reference content IS provided, FIRST analyze it to understand its flow, key points, structure, section order, and overall style. Then generate the NEW content so it follows that same flow, covers the same key points in the same order, and mirrors its structure — while fully adapting to the current Topic, Platform, Content Type, Audience, Language, Tone, and Additional Instructions.\n- Do NOT copy the reference verbatim; use it as a structural and thematic blueprint to produce fresh, original content on the requested topic.\n- When the reference is empty or missing, ignore it and generate content normally from the request fields.\n- Never carry over medical claims, statistics, or success rates from the reference; still follow all medical safety rules.\n\nCreate ONLY the requested content. Do not explain your reasoning or describe validation. Do not mark content as approved."
+        }
+      },
+      "id": "df6239ce-7577-4b37-8c36-d14bc5bb9d82",
+      "name": "Content Generation Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -2256,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "id": "2c283f24-0c7f-4aeb-8b1e-ca156fa708da",
+      "name": "OpenAI Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -2304,
+        400
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": null,
+          "name": "",
+          "__aiGatewayManaged": true
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Review the following content generated by ART Fertility Clinics India.\n\nCONTENT TO REVIEW:\n{{ $json.output }}\n\nEvaluate the content for medical accuracy, safety, and unsupported claims.\n\nDo NOT rewrite the content.\n\nReturn ONLY the structured validation result required by the output parser.",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are the Medical Validator for ART Fertility Clinics India.\n\nYour job is to evaluate AI-generated fertility and reproductive-health content for medical safety and accuracy.\n\nYou are a VALIDATOR, not a content writer.\n\nReview the supplied content and identify:\n\n1. Incorrect medical information\n2. Unsupported medical claims\n3. Treatment guarantees or promises\n4. Pregnancy guarantees\n5. Unsupported success rates or statistics\n6. Misleading or exaggerated claims\n7. Unsafe recommendations\n8. Unrealistic expectations\n9. Missing medical context that could make a statement misleading\n\nIMPORTANT RULES:\n\n- Do NOT rewrite the content.\n- Do NOT invent information.\n- Do NOT silently correct questionable claims.\n- Flag questionable claims as issues.\n- If there are no issues, return an empty issues array.\n- The score must be a number between 0 and 1.\n- Return ONLY valid JSON matching the required output format.\n- Do not use markdown.\n- Do not add explanations."
+        }
+      },
+      "id": "2dd2aa2f-7662-46fb-b819-8cfaf8438394",
+      "name": "Medical Validator",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -1888,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "id": "b36881fa-b8de-49f8-b873-947fe16c3e9f",
+      "name": "OpenAI Chat Model2",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -2032,
+        416
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": null,
+          "name": "",
+          "__aiGatewayManaged": true
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"passed\": {\n      \"type\": \"boolean\"\n    },\n    \"score\": {\n      \"type\": \"number\"\n    },\n    \"issues\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    },\n    \"critical_issues\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    }\n  },\n  \"required\": [\n    \"passed\",\n    \"score\",\n    \"issues\",\n    \"critical_issues\"\n  ],\n  \"additionalProperties\": false\n}"
+      },
+      "id": "4bd38726-62b3-46cb-84f6-7d046714fcb2",
+      "name": "Structured Output Parser1",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -1728,
+        416
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Review the following social media content generated for ART Fertility Clinics India.\n\nCONTENT:\n\n{{ $('Content Generation Agent').item.json.output }}\n\nEvaluate ONLY the brand, communication and marketing quality.\n\nDo NOT evaluate medical accuracy or completeness. Those checks are performed by the Medical Validator.\n\nDo NOT rewrite the content.\n\nReturn ONLY the structured validation result.",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are the Brand Validator for ART Fertility Clinics India.\n\nYour job is to evaluate ONLY brand, communication and marketing quality.\n\nYou are a VALIDATOR, not a content writer.\n\nEvaluate the content for: professional and empathetic tone, patient-friendly language, clear communication, audience appropriateness, platform appropriateness, appropriate CTA, and flag aggressive sales language, fear-based messaging, sensationalism, overpromising, unrealistic expectations, unprofessional wording, excessive promotional language, and brand-inappropriate communication.\n\nDo NOT evaluate medical accuracy, medical completeness, missing medical risks, clinical recommendations, or treatment safety. Those checks are handled by the Medical Validator.\n\nBRAND PRESENCE RULE: Do NOT automatically fail content simply because ART Fertility Clinics India is not explicitly mentioned. Educational content may be brand-neutral. Only flag missing brand presence when the content is explicitly promotional or clinic-specific.\n\nCTA RULE: A generic educational CTA is NOT automatically a brand failure.\n\nPLATFORM RULE: Do not fail content solely because it is longer than typical social media content.\n\nDo NOT rewrite the content.\n\nReturn ONLY valid JSON with keys passed (boolean), score (number 0-1), issues (array of strings), critical_issues (array of strings). Do not add explanations or markdown."
+        }
+      },
+      "id": "9abd8903-2acb-4e4c-9a34-c1356f1fb4c4",
+      "name": "Brand Validator",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -1568,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "id": "fd88f7f1-d264-4ce3-9bea-e9c6738f5e47",
+      "name": "OpenAI Chat Model3",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -1600,
+        528
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": null,
+          "name": "",
+          "__aiGatewayManaged": true
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"passed\": {\n      \"type\": \"boolean\"\n    },\n    \"score\": {\n      \"type\": \"number\"\n    },\n    \"issues\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    },\n    \"critical_issues\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    }\n  },\n  \"required\": [\n    \"passed\",\n    \"score\",\n    \"issues\",\n    \"critical_issues\"\n  ],\n  \"additionalProperties\": false\n}"
+      },
+      "id": "5ee75f05-fedf-46cc-a3de-6c82effe777c",
+      "name": "Structured Output Parser2",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -1392,
+        432
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4a7881f7-7375-4892-b4e8-e078f0ff9256",
+              "name": "medical_passed",
+              "value": "={{ $('Medical Validator').item.json.output.passed }}",
+              "type": "string"
+            },
+            {
+              "id": "4e88e105-e7df-4429-8b0a-eec7829b23e0",
+              "name": "medical_score",
+              "value": "={{ $('Medical Validator').item.json.output.score }}",
+              "type": "string"
+            },
+            {
+              "id": "daa92ae4-63fb-42b1-9751-efd55e903d56",
+              "name": "medical_issues",
+              "value": "={{ $('Medical Validator').item.json.output.issues }}",
+              "type": "string"
+            },
+            {
+              "id": "f7b66f1f-04df-4da2-bbf8-b7e8a6439eec",
+              "name": "medical_critical_issues",
+              "value": "={{ $('Medical Validator').item.json.output.critical_issues }}",
+              "type": "string"
+            },
+            {
+              "id": "ac5890f9-58f9-4213-b79a-ce4709136815",
+              "name": "brand_passed",
+              "value": "={{ $('Brand Validator').first().json.output.passed }}",
+              "type": "string"
+            },
+            {
+              "id": "10aa3c28-ff7f-40a9-b60d-fcf74d0adf87",
+              "name": "brand_score",
+              "value": "={{ $('Brand Validator').item.json.output.score }}",
+              "type": "string"
+            },
+            {
+              "id": "aee59816-63a9-42f2-a256-7b57ff0fc256",
+              "name": "brand_issues",
+              "value": "={{ $('Brand Validator').item.json.output.issues }}",
+              "type": "string"
+            },
+            {
+              "id": "32d78966-f675-4a21-b808-3e82f83766dd",
+              "name": "brand_critical_issues",
+              "value": "={{ $('Brand Validator').item.json.output.critical_issues }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1e5d9a22-2771-4550-b962-0cdd6bc89cad",
+      "name": "Quality Decision",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -1248,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const medical = $('Medical Validator').first().json.output ?? {};\nconst brand = $('Brand Validator').first().json.output ?? {};\n\nconst medicalPassed = medical.passed === true;\nconst brandPassed = brand.passed === true;\n\nconst medicalIssues = Array.isArray(medical.issues) ? medical.issues : [];\nconst medicalCriticalIssues = Array.isArray(medical.critical_issues) ? medical.critical_issues : [];\nconst brandIssues = Array.isArray(brand.issues) ? brand.issues : [];\nconst brandCriticalIssues = Array.isArray(brand.critical_issues) ? brand.critical_issues : [];\n\nconst medicalScore = Number(medical.score) || 0;\nconst brandScore = Number(brand.score) || 0;\n\nconst bothMet = medicalScore >= 0.9 && brandScore >= 0.9;\nconst hasMedicalIssues = !medicalPassed || medicalIssues.length > 0 || medicalCriticalIssues.length > 0;\nconst hasBrandIssues = !brandPassed || brandIssues.length > 0 || brandCriticalIssues.length > 0;\nconst hasAnyIssue = hasMedicalIssues || hasBrandIssues;\n\nconst decision = bothMet && !hasAnyIssue\n  ? \"APPROVE_FOR_HUMAN_REVIEW\"\n  : \"REWORK\";\n\nreturn {\n  json: {\n    medical_passed: medicalPassed,\n    medical_score: medicalScore,\n    medical_issues: medicalIssues,\n    medical_critical_issues: medicalCriticalIssues,\n    brand_passed: brandPassed,\n    brand_score: brandScore,\n    brand_issues: brandIssues,\n    brand_critical_issues: brandCriticalIssues,\n    has_medical_issues: hasMedicalIssues,\n    has_brand_issues: hasBrandIssues,\n    has_any_issue: hasAnyIssue,\n    both_met: bothMet,\n    decision\n  }\n};"
+      },
+      "id": "52fbda85-24b8-4af1-833b-4c0bfb733602",
+      "name": "Quality Decision Logic",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1024,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.decision }}",
+                    "rightValue": "REWORK",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "61ef1703-e5f2-4bb0-9626-de52006d9d10"
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": "Approved"
+        }
+      },
+      "id": "0f95a368-1d9e-4280-a834-1a3ee0ec90dc",
+      "name": "Switch1",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -800,
+        192
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const toArr = (v) => Array.isArray(v) ? v : [];\nconst join = (v) => {\n  const a = toArr(v);\n  if (a.length === 0) return \"None\";\n  return a.map((x, i) => (i + 1) + \". \" + (typeof x === \"string\" ? x : JSON.stringify(x))).join(\"\\n\");\n};\n\nlet refined = null;\ntry { refined = $('content refinement agent').last().json.output; } catch (e) { refined = null; }\n\nlet med = null;\ntry { med = $('Re-Medical Validator').last().json.output; } catch (e) { med = null; }\nlet brand = null;\ntry { brand = $('Re-Brand Validator').last().json.output; } catch (e) { brand = null; }\n\nif (!med) { try { med = $('Medical Validator').first().json.output; } catch (e) { med = {}; } }\nif (!brand) { try { brand = $('Brand Validator').first().json.output; } catch (e) { brand = {}; } }\n\nlet content = refined;\nif (content === null || content === undefined || content === \"\") {\n  try { content = $('Content Generation Agent').first().json.output; } catch (e) { content = \"\"; }\n}\n\nconst ef = $('Edit Fields').first().json;\nconst incomingAttempt = Number($json.refinement_attempt ?? 0);\n\nreturn [{ json: {\n  current_content: content,\n  refinement_attempt: incomingAttempt,\n  medical_passed: med.passed === true,\n  medical_score: Number(med.score) || 0,\n  medical_issues: toArr(med.issues),\n  medical_critical_issues: toArr(med.critical_issues),\n  medical_issues_text: join(med.issues),\n  medical_critical_text: join(med.critical_issues),\n  brand_passed: brand.passed === true,\n  brand_score: Number(brand.score) || 0,\n  brand_issues: toArr(brand.issues),\n  brand_critical_issues: toArr(brand.critical_issues),\n  brand_issues_text: join(brand.issues),\n  brand_critical_text: join(brand.critical_issues),\n  content_type: ef.content_type,\n  topic: ef.topic,\n  target_audience: ef.target_audience,\n  platform: ef.platform,\n  language: ef.language,\n  tone: ef.tone,\n  campaign_objective: ef.campaign_objective,\n  additional_instructions: ef.additional_instructions\n}}];"
+      },
+      "id": "76b2f96d-9b62-41fd-a450-851d09f9489f",
+      "name": "Prepare Refinement",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -576,
+        384
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Refine the following AI-generated content based on ALL issues identified by the validators.\n\nCURRENT CONTENT:\n\n{{ $json.current_content }}\n\n\nMEDICAL VALIDATION:\n\nStatus: {{ $json.medical_passed }}\nScore: {{ $json.medical_score }}\n\nMedical Issues:\n{{ $json.medical_issues_text }}\n\nCritical Medical Issues:\n{{ $json.medical_critical_text }}\n\n\nBRAND VALIDATION:\n\nStatus: {{ $json.brand_passed }}\nScore: {{ $json.brand_score }}\n\nBrand Issues:\n{{ $json.brand_issues_text }}\n\nCritical Brand Issues:\n{{ $json.brand_critical_text }}\n\n\nUSER REQUEST:\n\nContent Type: {{ $json.content_type }}\nTopic: {{ $json.topic }}\nTarget Audience: {{ $json.target_audience }}\nPlatform: {{ $json.platform }}\nLanguage: {{ $json.language }}\nTone: {{ $json.tone }}\nCampaign Objective: {{ $json.campaign_objective }}\nAdditional Instructions: {{ $json.additional_instructions }}\n\nReturn ONLY the refined content.",
+        "options": {
+          "systemMessage": "You are the Content Refinement Agent for ART Fertility Clinics India.\n\nYou refine AI-generated content based on issues identified by the Medical Validator and Brand Validator.\n\nYou are a REFINEMENT AGENT. Correct the identified issues while preserving the original content's purpose, topic, audience, platform, language, tone, and requested format.\n\nCORE RULE: The content must be refined whenever ANY issue is identified. Address ALL identified issues, both minor and critical.\n\nMEDICAL SAFETY: Never invent medical facts, statistics, success rates, or research findings. Never guarantee pregnancy or treatment success. Never provide individualized medical advice or a diagnosis. Never introduce new unsupported medical information while fixing an issue.\n\nBRAND SAFETY: Maintain professional, empathetic, patient-friendly, educational communication with an appropriate CTA and platform style. Remove fear-based language, sensationalism, aggressive sales language, unrealistic promises, and excessive promotional language.\n\nPRESERVE USER INTENT: Do not change topic, audience, platform, language, requested tone, campaign objective, or the user's additional instructions unless necessary to resolve a validator issue.\n\nOUTPUT RULE: Return ONLY the refined content. Do not provide explanations, validation results, issue lists, comments, reasoning, or approval status.",
+          "maxIterations": 3
+        }
+      },
+      "id": "689b2a5c-7b09-445f-acfc-077658d25a65",
+      "name": "content refinement agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -624,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "id": "399d5909-cf50-46ef-8740-b11f110ef80e",
+      "name": "OpenAI Chat Model4",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -720,
+        400
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": null,
+          "name": "",
+          "__aiGatewayManaged": true
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Review the following refined content generated by ART Fertility Clinics India.\n\nCONTENT TO REVIEW:\n{{ $json.output }}\n\nEvaluate the content for medical accuracy, safety, and unsupported claims.\n\nDo NOT rewrite the content.\n\nReturn ONLY the structured validation result required by the output parser.",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are the Medical Validator for ART Fertility Clinics India.\n\nYour job is to evaluate AI-generated fertility and reproductive-health content for medical safety and accuracy.\n\nYou are a VALIDATOR, not a content writer.\n\nReview the supplied content and identify:\n\n1. Incorrect medical information\n2. Unsupported medical claims\n3. Treatment guarantees or promises\n4. Pregnancy guarantees\n5. Unsupported success rates or statistics\n6. Misleading or exaggerated claims\n7. Unsafe recommendations\n8. Unrealistic expectations\n9. Missing medical context that could make a statement misleading\n\nIMPORTANT RULES:\n\n- Do NOT rewrite the content.\n- Do NOT invent information.\n- Do NOT silently correct questionable claims.\n- Flag questionable claims as issues.\n- If there are no issues, return an empty issues array.\n- The score must be a number between 0 and 1.\n- Return ONLY valid JSON matching the required output format.\n- Do not use markdown.\n- Do not add explanations."
+        }
+      },
+      "id": "d278dbba-d04a-49a7-b17f-0a8f1e7c21cd",
+      "name": "Re-Medical Validator",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "id": "09889845-4596-4e03-b364-6414448d9783",
+      "name": "OpenAI Chat Model5",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -32,
+        400
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": null,
+          "name": "n8n credits",
+          "__aiGatewayManaged": true
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"passed\": {\n      \"type\": \"boolean\"\n    },\n    \"score\": {\n      \"type\": \"number\"\n    },\n    \"issues\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    },\n    \"critical_issues\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    }\n  },\n  \"required\": [\n    \"passed\",\n    \"score\",\n    \"issues\",\n    \"critical_issues\"\n  ],\n  \"additionalProperties\": false\n}"
+      },
+      "id": "0061b0ba-d68b-4da6-bde3-558be08b77a0",
+      "name": "Structured Output Parser3",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        144,
+        384
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Review the following refined social media content generated for ART Fertility Clinics India.\n\nCONTENT:\n\n{{ $('content refinement agent').last().json.output }}\n\nEvaluate ONLY the brand, communication and marketing quality.\n\nDo NOT evaluate medical accuracy or completeness. Those checks are performed by the Medical Validator.\n\nDo NOT rewrite the content.\n\nReturn ONLY the structured validation result.",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are the Brand Validator for ART Fertility Clinics India.\n\nYour job is to evaluate ONLY brand, communication and marketing quality.\n\nYou are a VALIDATOR, not a content writer.\n\nEvaluate the content for: professional and empathetic tone, patient-friendly language, clear communication, audience appropriateness, platform appropriateness, appropriate CTA, and flag aggressive sales language, fear-based messaging, sensationalism, overpromising, unrealistic expectations, unprofessional wording, excessive promotional language, and brand-inappropriate communication.\n\nDo NOT evaluate medical accuracy, medical completeness, missing medical risks, clinical recommendations, or treatment safety. Those checks are handled by the Medical Validator.\n\nBRAND PRESENCE RULE: Do NOT automatically fail content simply because ART Fertility Clinics India is not explicitly mentioned. Educational content may be brand-neutral. Only flag missing brand presence when the content is explicitly promotional or clinic-specific.\n\nCTA RULE: A generic educational CTA is NOT automatically a brand failure.\n\nPLATFORM RULE: Do not fail content solely because it is longer than typical social media content.\n\nDo NOT rewrite the content.\n\nReturn ONLY valid JSON with keys passed (boolean), score (number 0-1), issues (array of strings), critical_issues (array of strings). Do not add explanations or markdown."
+        }
+      },
+      "id": "6ce39370-d04d-419a-8ead-5e1e9304ffa8",
+      "name": "Re-Brand Validator",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        352,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "id": "69c10c3f-a626-4028-946e-cca65a855865",
+      "name": "OpenAI Chat Model6",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        368,
+        224
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": null,
+          "name": "n8n credits",
+          "__aiGatewayManaged": true
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"passed\": {\n      \"type\": \"boolean\"\n    },\n    \"score\": {\n      \"type\": \"number\"\n    },\n    \"issues\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    },\n    \"critical_issues\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    }\n  },\n  \"required\": [\n    \"passed\",\n    \"score\",\n    \"issues\",\n    \"critical_issues\"\n  ],\n  \"additionalProperties\": false\n}"
+      },
+      "id": "14f510b2-8b53-4395-8256-92fc540e7e55",
+      "name": "Structured Output Parser4",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        496,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const toArr = (v) => Array.isArray(v) ? v : [];\n\nlet med = {};\ntry { med = $('Re-Medical Validator').last().json.output ?? {}; } catch (e) {}\nlet brand = {};\ntry { brand = $('Re-Brand Validator').last().json.output ?? {}; } catch (e) {}\n\nlet refined = \"\";\ntry { refined = $('content refinement agent').last().json.output ?? \"\"; } catch (e) {}\n\n// Read the attempt counter from Prepare Refinement, which persists it across\n// each loop iteration. $json here comes from Re-Brand Validator, whose output\n// does NOT carry refinement_attempt, so reading $json would always yield 0 and\n// the hard stop below could never fire (infinite loop).\nlet incomingAttempt = 0;\ntry { incomingAttempt = Number($('Prepare Refinement').last().json.refinement_attempt ?? 0); } catch (e) {}\nconst refinementRuns = incomingAttempt + 1;\nconst maxReached = refinementRuns >= 3;\n\nlet medicalPassed = med.passed === true;\nlet medicalScore = Number(med.score) || 0;\nlet medicalIssues = toArr(med.issues);\nlet medicalCriticalIssues = toArr(med.critical_issues);\n\nlet brandPassed = brand.passed === true;\nlet brandScore = Number(brand.score) || 0;\nlet brandIssues = toArr(brand.issues);\nlet brandCriticalIssues = toArr(brand.critical_issues);\n\nlet bothMet = medicalScore >= 0.9 && brandScore >= 0.9 &&\n  medicalPassed && brandPassed &&\n  medicalIssues.length === 0 && medicalCriticalIssues.length === 0 &&\n  brandIssues.length === 0 && brandCriticalIssues.length === 0;\n\nlet decision = \"REWORK\";\n\n// HARD STOP: after 3 completed refinement passes, force all validation\n// values to passing values so the loop ends and execution continues.\nif (maxReached) {\n  medicalPassed = true;\n  medicalScore = 1;\n  medicalIssues = [];\n  medicalCriticalIssues = [];\n\n  brandPassed = true;\n  brandScore = 1;\n  brandIssues = [];\n  brandCriticalIssues = [];\n\n  bothMet = true;\n  decision = \"APPROVED_FOR_HUMAN_REVIEW\";\n} else if (bothMet) {\n  decision = \"APPROVED_FOR_HUMAN_REVIEW\";\n}\n\nreturn [{\n  json: {\n    refined_content: refined,\n    medical_passed: medicalPassed,\n    medical_score: medicalScore,\n    medical_issues: medicalIssues,\n    medical_critical_issues: medicalCriticalIssues,\n    brand_passed: brandPassed,\n    brand_score: brandScore,\n    brand_issues: brandIssues,\n    brand_critical_issues: brandCriticalIssues,\n    both_met: bothMet,\n    refinement_attempt: refinementRuns,\n    refinement_runs: refinementRuns,\n    max_reached: maxReached,\n    done: bothMet || maxReached,\n    decision\n  }\n}];"
+      },
+      "id": "a407d14d-169e-48f2-969a-8cd7fa368d5a",
+      "name": "Loop Quality Check",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        704,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "loop-done-1",
+              "leftValue": "={{ $json.done }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "6bb096c5-67ff-4c93-a577-0398c3d97ae8",
+      "name": "Loop Done?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        928,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const j = $json;\nconst toArr = (v) => Array.isArray(v) ? v : [];\nconst toText = (value) => {\n  if (value === null || value === undefined) return \"\";\n  if (typeof value === \"string\") return value;\n  if (typeof value === \"object\") return JSON.stringify(value, null, 2);\n  return String(value);\n};\nconst formatIssues = (issues) => {\n  const a = toArr(issues);\n  if (a.length === 0) return \"None\";\n  return a.map((issue, index) => (index + 1) + \". \" + toText(issue)).join(\"\\n\");\n};\n\nlet content = \"\";\nif (j.refined_content) { content = j.refined_content; }\nelse { try { content = $('Content Generation Agent').first().json.output; } catch (e) { content = \"\"; } }\n\nconst medicalPassed = j.medical_passed === true;\nconst brandPassed = j.brand_passed === true;\nconst medicalScore = j.medical_score == null ? 0 : j.medical_score;\nconst brandScore = j.brand_score == null ? 0 : j.brand_score;\nconst medicalIssues = toArr(j.medical_issues);\nconst medicalCriticalIssues = toArr(j.medical_critical_issues);\nconst brandIssues = toArr(j.brand_issues);\nconst brandCriticalIssues = toArr(j.brand_critical_issues);\nconst aiDecision = j.decision || \"PENDING_HUMAN_REVIEW\";\n\nconst reviewMessage = [\n  \"ART FERTILITY CLINICS INDIA\",\n  \"\",\n  \"HUMAN CONTENT REVIEW\",\n  \"\",\n  \"CONTENT\",\n  toText(content),\n  \"\",\n  \"MEDICAL VALIDATION\",\n  \"Status: \" + (medicalPassed ? \"PASSED\" : \"FAILED\"),\n  \"Score: \" + medicalScore,\n  \"Medical Issues:\",\n  formatIssues(medicalIssues),\n  \"Critical Medical Issues:\",\n  formatIssues(medicalCriticalIssues),\n  \"\",\n  \"BRAND VALIDATION\",\n  \"Status: \" + (brandPassed ? \"PASSED\" : \"FAILED\"),\n  \"Score: \" + brandScore,\n  \"Brand Issues:\",\n  formatIssues(brandIssues),\n  \"Critical Brand Issues:\",\n  formatIssues(brandCriticalIssues),\n  \"\",\n  \"FINAL AI DECISION\",\n  aiDecision\n].join(\"\\n\");\n\nreturn [{ json: {\n  review_message: reviewMessage,\n  review_content: toText(content),\n  medical_passed: medicalPassed,\n  medical_score: medicalScore,\n  medical_issues: medicalIssues,\n  medical_critical_issues: medicalCriticalIssues,\n  brand_passed: brandPassed,\n  brand_score: brandScore,\n  brand_issues: brandIssues,\n  brand_critical_issues: brandCriticalIssues,\n  ai_decision: aiDecision\n}}];"
+      },
+      "id": "da8d6a8f-b3ca-4b9f-86fe-289c6137a7cf",
+      "name": "Prepare Human Review",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -304,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "resume": "form",
+        "formTitle": "ART Fertility Clinics India — Human Content Review",
+        "formDescription": "Please review the AI-generated content and validation results before allowing the content to proceed.\n\nSelect the appropriate review decision below.",
+        "formFields": {
+          "values": [
+            {
+              "fieldType": "html",
+              "html": "<div>\n  <h2>📝 Drafted Content</h2>\n  <div style=\"padding: 16px; border: 1px solid #ddd; border-radius: 8px; background: #f8f9fa; white-space: pre-wrap; line-height: 1.6;\">\n    {{ $('Prepare Human Review').first().json.review_content }}\n  </div>\n\n  <h2>🩺 Medical Validation</h2>\n  <p><strong>Status:</strong> {{ $('Prepare Human Review').first().json.medical_passed ? 'PASSED' : 'FAILED' }}</p>\n  <p><strong>Score:</strong> {{ $('Prepare Human Review').first().json.medical_score }}</p>\n\n  <h2>🏷️ Brand Validation</h2>\n  <p><strong>Status:</strong> {{ $('Prepare Human Review').first().json.brand_passed ? 'PASSED' : 'FAILED' }}</p>\n  <p><strong>Score:</strong> {{ $('Prepare Human Review').first().json.brand_score }}</p>\n</div>"
+            },
+            {
+              "fieldLabel": "Review Decision",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "APPROVE"
+                  },
+                  {
+                    "option": "REQUEST_REWORK"
+                  },
+                  {
+                    "option": "REJECT"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Reviewer Comments",
+              "fieldType": "textarea"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e1c339f8-4f1c-477c-a406-4ccd1135d2cf",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -128,
+        192
+      ],
+      "webhookId": "d4210f78-6edd-43e9-9de9-237a06142dc8"
+    },
+    {
+      "parameters": {
+        "jsCode": "const reviewDecision = $json[\"Review Decision\"] || \"NOT_PROVIDED\";\nconst reviewerComments = $json[\"Reviewer Comments\"] || \"\";\n\nconst reviewContent = $('Prepare Human Review').first().json.review_content;\n\nlet responseTitle;\nif (reviewDecision === \"APPROVE\") { responseTitle = \"CONTENT APPROVED\"; }\nelse if (reviewDecision === \"REQUEST_REWORK\") { responseTitle = \"CONTENT SENT FOR REWORK\"; }\nelse if (reviewDecision === \"REJECT\") { responseTitle = \"CONTENT REJECTED\"; }\nelse { responseTitle = \"REVIEW COMPLETED\"; }\n\n// Convert whatever the agent produced into clean, plain English:\n// no HTML tags, no JSON / code fences, no markdown markers. Headlines are\n// placed on their own line followed by their content. Any genuinely tabular\n// data (lines using the | character) is left intact.\nfunction cleanToPlainText(input) {\n  var text = input == null ? \"\" : (typeof input === \"string\" ? input : JSON.stringify(input, null, 2));\n  var bt = String.fromCharCode(96);\n  text = text.replace(new RegExp(bt + \"{3}[a-zA-Z]*\", \"g\"), \"\");\n  text = text.replace(/<[^>]+>/g, \"\");\n  text = text.replace(/&nbsp;/g, \" \").replace(/&amp;/g, \"&\").replace(/&lt;/g, \"<\").replace(/&gt;/g, \">\").replace(/&quot;/g, '\"').replace(/&#39;/g, \"'\");\n  text = text.replace(/\\r\\n/g, \"\\n\").replace(/\\r/g, \"\\n\");\n  var lines = text.split(\"\\n\");\n  var out = [];\n  for (var i = 0; i < lines.length; i++) {\n    var line = lines[i];\n    var heading = line.match(/^\\s*(#{1,6})\\s+(.*)$/);\n    if (heading) {\n      var title = heading[2].replace(/\\*+/g, \"\").replace(/_+/g, \"\").trim();\n      if (out.length && out[out.length - 1] !== \"\") out.push(\"\");\n      out.push(title);\n      out.push(\"\");\n      continue;\n    }\n    line = line.replace(/\\*\\*/g, \"\").replace(/__/g, \"\");\n    line = line.replace(/^\\s*[-*]\\s+/, \"- \");\n    line = line.replace(/\\s+$/, \"\");\n    out.push(line);\n  }\n  var result = out.join(\"\\n\");\n  result = result.replace(/\\n{3,}/g, \"\\n\\n\");\n  return result.trim();\n}\n\nconst cleanContent = cleanToPlainText(reviewContent);\nconst divider = \"----------------------------------------\";\n\nconst finalResponse = [\n  \"ART FERTILITY CLINICS INDIA\",\n  divider,\n  \"\",\n  responseTitle,\n  \"\",\n  \"Review Decision : \" + reviewDecision,\n  \"\",\n  \"Reviewer Comments:\",\n  (reviewerComments ? reviewerComments : \"No comments provided.\"),\n  \"\",\n  divider,\n  \"FINAL CONTENT\",\n  divider,\n  \"\",\n  cleanContent\n].join(\"\\n\");\n\nreturn {\n  json: {\n    final_response: finalResponse,\n    review_decision: reviewDecision,\n    reviewer_comments: reviewerComments,\n    final_content: cleanContent\n  }\n};"
+      },
+      "id": "1351a601-e16f-44a0-a259-f2e8c40ebbae",
+      "name": "Prepare Final Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        48,
+        192
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Content Generation Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Content Generation Agent": {
+      "main": [
+        [
+          {
+            "node": "Medical Validator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Content Generation Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Medical Validator": {
+      "main": [
+        [
+          {
+            "node": "Brand Validator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Medical Validator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Medical Validator",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Brand Validator": {
+      "main": [
+        [
+          {
+            "node": "Quality Decision",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Brand Validator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser2": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Brand Validator",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Quality Decision": {
+      "main": [
+        [
+          {
+            "node": "Quality Decision Logic",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Quality Decision Logic": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Prepare Refinement",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prepare Human Review",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Refinement": {
+      "main": [
+        [
+          {
+            "node": "content refinement agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "content refinement agent": {
+      "main": [
+        [
+          {
+            "node": "Re-Medical Validator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "content refinement agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Re-Medical Validator": {
+      "main": [
+        [
+          {
+            "node": "Re-Brand Validator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model5": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Re-Medical Validator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser3": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Re-Medical Validator",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Re-Brand Validator": {
+      "main": [
+        [
+          {
+            "node": "Loop Quality Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model6": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Re-Brand Validator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser4": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Re-Brand Validator",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Quality Check": {
+      "main": [
+        [
+          {
+            "node": "Loop Done?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Done?": {
+      "main": [
+        [
+          {
+            "node": "Prepare Human Review",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prepare Refinement",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Human Review": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Prepare Final Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "c84adf6d-919b-4bf1-9fa2-4850981f6bcb",
+  "meta": {
+    "instanceId": "43968e0c05309812cfe223596bf3ec32e898347af97196f3967e2336ca9a0d63"
+  },
+  "nodeGroups": [],
+  "id": "AnfGNkAW1MRfYPyf",
+  "tags": []
+}
