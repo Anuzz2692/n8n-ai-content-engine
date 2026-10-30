@@ -183,6 +183,14 @@ const maxReached = refinementRuns >= 3;
 
 ---
 
+## Importing the n8n Workflow.
+        1. Open n8n.
+        2. Select Import from File.
+        3. Select your workflow JSON.
+        4. Configure the required credentials.
+        5. Execute and test the workflow.
+
+        
 ## 🔮 Roadmap
 
 - A local version using Ollama with Qwen2.5-Coder-7B (in progress)
